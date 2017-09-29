@@ -1,0 +1,262 @@
+<div class="wrapper wrapper-content autopage">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5 id="taskTitle" >新建营销任务
+                       <!-- <small>输入任务相关属性</small>-->
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-horizontal">
+                        <h5>一般任务属性</h5>
+                        <div class="hr-line-dashed"></div>
+                        <form id="taskInfoForm">
+                            <input type="hidden" value="J0001" name="taskType" />
+                            <!-- 1:手机号维度  2:设备号维度-->
+                            <input type="hidden" value="1" name="crowdType" id="crowdType" />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">任务名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="" class="form-control" required=""
+                                           aria-required="true" name="taskName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">任务说明</label>
+                                <div class="col-sm-10">
+                                    <textarea id="ccomment" name="taskDes" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">任务主题</label>
+                                <div class="col-sm-6">
+                                    <select name="taskMotif" placeholder="任务主题" class="form-control">
+                                        <option value="">--任务主题--</option>
+                                        <option value="1">新店开业</option>
+                                        <option value="2">闭店</option>
+                                        <option value="3">区域促销活动</option>
+                                        <option value="4">区域主题活动</option>
+                                        <option value="5">外卖促销活动</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="hr-line-solid"></div>
+                        <h5>选择条件</h5>
+                        <div class="hr-line-dashed"></div>
+                        <div id="rulediv">
+                            <div class="rule">
+                                <div class="form-group has-warning">
+                                    <label class="col-sm-2 control-label">圈人规则</label>
+                                    <div class="col-sm-10">
+                                        <button class="btn-sm btn-danger pull-right delRule"><i class="fa fa-times"></i>删除规则</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">选择数据源</label>
+                                    <div class="col-sm-2 m-b-xs">
+                                        <select name="datasource" placeholder="数据源" class="form-control datasource">
+                                            <option value="">--数据源--</option>
+                                            <option value="d001">会员</option>
+                                            <option value="d002">门店</option>
+                                            <option value="d003">电商</option>
+                                            <option value="d004">外卖</option>
+                                            <option value="d005">app</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group has-success">
+                                        <label class="col-sm-2 control-label">包含</label>
+                                        <div class="col-sm-10">
+                                            <button class="btn btn-white addCondition" target-data="include" type="button">
+                                                <i class="fa fa-plus"></i> 添加
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group has-error">
+                                        <label class="col-sm-2 control-label">排除</label>
+                                        <div class="col-sm-10">
+                                            <button class="btn btn-white addCondition" target-data="exclude" type="button">
+                                                <i class="fa fa-plus"></i> 添加
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                            <!--<div class="hr-line-dashed" id="line"></div>
+                            <div class="form-group has-warning">
+                                <label class="col-sm-2 control-label">取数规则2</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">选择数据源</label>
+                                <div class="col-sm-2 m-b-xs">
+                                    <select name="validate" placeholder="数据源" class="form-control">
+                                        <option value="">--数据源--</option>
+                                        <option value="0">外卖</option>
+                                        <option value="1">门店</option>
+                                        <option value="2">电商</option>
+                                        <option value="3">会员</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group has-success">
+                                <label class="col-sm-2 control-label">包含</label>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-white demo-create btn-block" href="#">
+                                        <i class="glyphicon glyphicon-plus"></i> 添加</a>
+                                </div>
+                            </div>
+                            <div class="form-group has-error">
+                                <label class="col-sm-2 control-label">排除</label>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-white demo-create btn-block" href="#"><i
+                                            class="glyphicon glyphicon-remove"></i> 添加</a>
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">添加规则</label>
+                            <div class="col-sm-2">
+                                <a class="btn btn-white demo-create btn-block" href="#" id="addRule">
+                                    <i class="fa fa-plus"></i> 添加</a>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">当月发送累计次数</label>
+                            <div class="col-sm-8">
+                                <input id="range" type="text"  placeholder="请拖动按钮选择" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary submit" type="button" id="submitTask" >
+                                    保存任务
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 营销方式选择的弹窗 -->
+<div class="modal fade" id="selectTask" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true"  aria-labelledby="#selectTask">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="excute">营销方式选择</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-6 text-center"><button type="button" class="btn btn-primary" id="mobileMessage" data-dismiss="modal">手机短信推送</button></div>
+                <div class="col-sm-6 text-center"><button type="button" class="btn btn-primary" id="appMessage" data-dismiss="modal">app消息推送</button></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--筛选条件的弹窗-->
+<div class="modal fade" id="dimRule" tabindex="-1" role="dialog"   data-backdrop="static" aria-hidden="true" aria-labelledby="#addDim">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="add">添加维度</h4>
+            </div>
+            <div class="modal-body">
+                <div class="ibox-content">
+                    <div class="col-sm-6">
+                        <div id="tree"></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h5>选择的条件：</h5>
+                        <hr>
+                        <div id="event_output">
+
+                            <!--
+                                时间控件
+                            <div class="form-group">
+                                <label class="font-noraml" style="margin-bottom:10px;">范围选择:</label>
+                                <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input form-control" id="beginTime" name="start" value="">
+                                    <span class="input-group-addon">到</span>
+                                    <input type="text" class="input form-control" id="endTime" name="end" value="">
+                                </div>
+                            </div>
+                            -->
+
+
+                            <!--    多选菜单
+                            <div class="form-group ">
+                                <label class="font-noraml col-sm-12" style="margin-bottom:10px;">多选:</label>
+                                <div class="col-sm-6" >
+                                    <div class="checkbox checkbox-info  checkbox-common">
+                                        <input type="checkbox" id="checkbox1" value="1" name="resources">
+                                        <label for="checkbox1">首页</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6" >
+                                    <div class="checkbox checkbox-info checkbox-common">
+                                        <input type="checkbox" id="checkbox2" value="1" name="resources">
+                                        <label for="checkbox2">首页</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6" >
+                                    <div class="checkbox checkbox-info checkbox-common">
+                                        <input type="checkbox" id="checkbox3" value="1" name="resources">
+                                        <label for="checkbox3">首页</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6" >
+                                    <div class="checkbox checkbox-info checkbox-common">
+                                        <input type="checkbox" id="checkbox4" value="1" name="resources">
+                                        <label for="checkbox4">首页</label>
+                                    </div>
+                                </div>
+
+                            </div>-->
+
+                            <!--
+                            like模糊匹配
+                            <div class="form-group">
+                                <label class="font-noraml col-sm-12" style="margin-bottom:10px;">模糊匹配输入:</label>
+                                <div class="col-sm-12" >
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            -->
+
+                            <!--<div class="form-group">
+                                <label class="font-noraml col-sm-12" style="margin-bottom:10px;">模糊条件筛选:</label>
+                                <div class="col-sm-12" >
+                                    <input type="text" data-role="tagsinput" class="form-control" id="inputserch" value="12343254" />
+                                </div>
+                            </div>-->
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="commitDim" data-dismiss="modal">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+.radio-common{
+	margin-left: 20px
+}
+.label-green{
+	background-color: #4CAF50;
+	color: #FFF;
+}
+.label-purple{
+	background-color: #9C27B0;
+	color: #FFF;
+}
+
+.label-orange{
+	background-color: #FF5722;
+	color: #FFF;
+}
+
+.label-yellow{
+	background-color: #FFC107;
+	color: #FFF;
+}

@@ -1,0 +1,63 @@
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>权限管理 - 新增资源</h5>
+					<div class="ibox-tools">
+						<div data-url='page/resourceManage/resourceInfo.html' data-mode='resourceInfo' data-value='' onclick="returnPage(event)" style="cursor:pointer;">返回</div>
+					</div>
+				</div>
+				<div class="ibox-content">
+					<div class="alert alert-info">请填写下列表单</div>
+					<form role="form" class="form-horizontal m-t">
+						<div class="form-group">
+							<label class="col-sm-1 control-label">资源编号</label>
+							<div class="col-sm-11">
+								<input class="form-control" id="code" name="code" type="text" placeholder="请输入资源编号"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-1 control-label">资源名称</label>
+							<div class="col-sm-11">
+								<input class="form-control" id="name" name="name" type="text" placeholder="请输入资源名称"></div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-1 control-label">模块名称</label>
+							<div class="col-sm-11">
+								<input class="form-control" id="mode" name="mode" type="text" placeholder="请输入模块名称(非必输)"></div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-1 control-label">链接地址</label>
+							<div class="col-sm-11">
+								<input class="form-control" id="url" name="url" type="text" placeholder="请输入链接地址(非必输)"></div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-1 control-label">菜单头标</label>
+							<div class="col-sm-11">
+								<input class="form-control" id="icon" name="icon" type="text" placeholder="请输入菜单头标(非必输)"></div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-1 control-label">上级资源编号</label>
+							<div class="col-sm-11">
+								<input class="form-control" id="pCode" name="pCode" type="text" placeholder="请输入上级资源编号"></div>
+						</div>
+						
+						
+						<div class="form-group">
+							<div class="col-sm-offset-11 col-sm-1">
+								<input class="btn btn-primary" id="commit" name="commit" type="button" value="保存"></div>
+						</div>
+					</form>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>

@@ -1,0 +1,239 @@
+<div class="wrapper wrapper-content autopage">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>任务详细信息
+                    </h5>
+                    <div class="ibox-tools">
+                        <button class="btn-sm btn-white btn-block" data-url="page/taskManager/taskList.html"
+                                data-mode="taskList" data-value="" onclick="returnPage(event)" style="cursor:pointer;">
+                            返回
+                        </button>
+                    </div>
+
+                </div>
+                <div class="ibox-content">
+                    <div class="form-horizontal">
+                        <h5>一般任务属性</h5>
+                        <div class="hr-line-dashed"></div>
+                        <form>
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-4 control-label">任务号:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="id" disabled="disabled"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-4 control-label">角色代码:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="roleCode" disabled="disabled"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">任务状态:</label>
+                                <div class="col-sm-4">
+                                    <select name="taskState" placeholder="任务状态" class="form-control"
+                                            disabled="disabled">
+                                        <option value="">--任务状态--</option>
+                                        <option value="0">等待中</option>
+                                        <option value="1">执行中</option>
+                                        <option value="2">已停止</option>
+                                        <option value="3">已失败</option>
+                                        <option value="4">已完成</option>
+                                        <option value="5">待审核</option>
+                                        <option value="6">未通过</option>
+                                        <option value="7">已通过</option>
+                                        <option value="8">发送中</option>
+                                        <option value="9">发送成功</option>
+                                        <option value="10">测试中</option>
+                                        <option value="11">已测试</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">任务名称:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" disabled="disabled" class="form-control"
+                                           required=""
+                                           aria-required="true" name="taskName">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">任务说明:</label>
+                                <div class="col-sm-8">
+                                    <textarea name="taskDes" class="form-control" disabled="disabled"></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-4 control-label">最后更新:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="createTime" disabled="disabled"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-4 control-label">创建于:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="updateTime" disabled="disabled"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-4 control-label">任务提交人:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="userName" disabled="disabled"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-4 control-label">任务审核人:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="approveName" disabled="disabled"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-4 control-label">圈人人数:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="crowdNum" disabled="disabled"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-4 control-label">发送人数:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="sendAmount" disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-4 control-label">发送时间:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="datePeriod" disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-4 control-label">当月发送限制:</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="monthlyLimit" disabled="disabled"/>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                        <div class="form-group col-sm-12">
+                            <h5>选择条件</h5>
+                            <div class="hr-line-dashed"></div>
+                        </div>
+
+
+                        <form id="taskDetailForm">
+                        </form>
+
+
+                        <div class="form-group col-sm-12">
+                            <h5>发送内容</h5>
+                            <div class="hr-line-dashed"></div>
+                        </div>
+
+
+                        <!-- 短信发送用户 -->
+                        <div id="sendMobile" style="display: none">
+                            <form id="sendMobileForm">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">短信内容:</label>
+                                    <div class="col-sm-10">
+                                            <textarea id="smsMsgContent" name="msgContent" maxlength="500"
+                                                      class="form-control msgContent"
+                                                      placeholder="请输入短信内容,注意加入TD退订" disabled="disabled"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">发送时间:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="input form-control datePeriod" id="smsDatePeriod"
+                                               name="datePeriod" value="" placeholder="发送时间精确到分钟" disabled="disabled">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">发送数量:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="input form-control" id="smsSendAmount"
+                                               name="sendAmount" value="" placeholder="发送短信数量" disabled="disabled">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- app发送用户 -->
+                        <div id="sendApp" style="display: none">
+                            <form id="sendAppForm">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">信息标题:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="input form-control msgTitle" name="title" value=""
+                                               placeholder="请输入发送信息标题" disabled="disabled">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">信息内容:</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="body" maxlength="500" class="form-control msgContent"
+                                                  placeholder="请输入信息内容,注意加入TD退订" disabled="disabled"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">跳转链接:</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="input form-control jumpLink" name="url" value=""
+                                               placeholder="请输入跳转链接" disabled="disabled">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">有效存在时长:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="input form-control time" name="time" value=""
+                                               placeholder="请输入有效存在时长(小时)" disabled="disabled">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">发送时间:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="input form-control datePeriod" id="smsDatePeriod"
+                                               name="datePeriod" value="" placeholder="发送时间精确到分钟" disabled="disabled">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">发送数量:</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="input form-control" id="smsSendAmount"
+                                               name="sendAmount" value="" placeholder="发送短信数量" disabled="disabled">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

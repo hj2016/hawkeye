@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+  http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="${dubbo.application.name}"/>
+    <dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}"/>
+    <dubbo:monitor protocol="registry"></dubbo:monitor>
+    <dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}" payload="${dubbo.protocol.payload}"/>
+
+
+    <!--<dubbo:reference id="generaterService"
+                     interface="com.unionpaysmart.apollo.client.iface.generater.IGeneraterService"/>
+    <dubbo:reference id="schedulerService"
+                     interface="com.unionpaysmart.apollo.client.iface.scheduler.ISchedulerService"/>
+
+    <bean id="rulaiService" class="com.unionpaysmart.apollo.server.service.rulai.RulaiServiceImpl"/>
+    <dubbo:service interface="com.unionpaysmart.apollo.client.iface.rulai.IRulaiService" ref="rulaiService"
+                   timeout="${dubbo.service.timeout}"/>-->
+</beans>

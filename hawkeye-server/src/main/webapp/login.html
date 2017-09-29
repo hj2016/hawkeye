@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>良品铺子短信营销平台</title>
+
+    <!--<link rel="shortcut icon" href="favicon.ico">-->
+    <link href="css/bootstrap/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/frame/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+
+    <link href="css/frame/animate.min.css" rel="stylesheet">
+    <link href="css/frame/style.min.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="css/modules/site.css">
+    <!--[if lt IE 9]>
+    <!--<meta http-equiv="refresh" content="0;ie.html"/>-->
+    <![endif]-->
+    <script src="scripts/libs/jquery/jquery.min.js"></script>
+    <script src="scripts/libs/jquery/jquery-plugins.js"></script>
+    <script src="scripts/libs/bootstrap/bootstrap.min.js"></script>
+    <script src="scripts/modules/login/login.js"></script>
+    <script src="scripts/common/browser.js"></script>
+    <script>
+
+
+        if (window.top !== window.self) {
+            window.top.location = window.location;
+        }
+        // 自定义弹出框
+        window.alert = function (msg,callback) {
+            var flag = false;
+            $("#alert-msg").html(msg);
+            $("#alert-div").modal('show');
+            $("#btn-ensure").off("click");
+            if(typeof(callback) != "undefined"){
+                $("#btn-ensure").on("click",callback);
+            }
+        }
+
+    </script>
+</head>
+
+<body class="gray-bg">
+
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+    <div>
+        <div>
+            <div class="m-b-md">
+                <img alt="image" class="img-circle circle-border" src="page/imges/a1.jpg">
+            </div>
+        </div>
+        <h3>良品铺子短信营销平台</h3>
+
+        <form class="m-t" role="form">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="用户名" name="loginName">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="密码" name="password">
+            </div>
+            <button type="button" class="btn btn-warning block full-width" id="login">
+                登 录
+            </button>
+            <!--
+            <p class="text-muted text-center">
+            <a href="login.html#">
+            <small>忘记密码了？</small>
+            </a>
+            |
+            <a href="#">注册一个新账号</a>
+            </p>
+            -->
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<div class="modal fade modal-warning in" id="alert-div" aria-hidden="true" data-backdrop="static" aria-hidden="true" aria-labelledby="exampleModalWarning"
+     role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p id="alert-msg"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-ensure" type="button" class="btn btn-success"
+                        style="color: #fff;background-color: #62a8ea;border-color: #62a8ea;" data-dismiss="modal">确定
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
