@@ -17,10 +17,10 @@ define(function (require, exports, module) {
     $(function () {
         //console.log("login");
         $.postNoAsync("/user/getUserBySession", {}, function (data) {
-            if (!data.data) {
+            /*if (!data.data) {
                 window.location.href = "login.html";
                 return;
-            }
+            }*/
             var loginName = data.data.split(':')[0];
             var loginRole = data.data.split(':')[1];
             $('#loginname').text(loginName);

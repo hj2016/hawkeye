@@ -85,6 +85,7 @@ CREATE TABLE `task` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键 前端页面任务ID',
   `account` varchar(255) DEFAULT NULL  COMMENT '账户名称',
   `task_name` varchar(255)  NOT NULL COMMENT '任务名称',
+  `task_desc` varchar(255)  DEFAULT NULL COMMENT '任务描述',
   `task_type` varchar(255)  NOT NULL COMMENT '任务的类别',
   `state` int(11) DEFAULT NULL COMMENT '任务状态',
   `content` longtext COMMENT '执行的sql语句',
@@ -140,6 +141,7 @@ CREATE TABLE `tag` (
   `choice_type` varchar(255) DEFAULT NULL COMMENT '圈选展现方式, 1：多选 , 2:输入框 , 3:日期控件选择, 4:输入方式检索选择',
   `val_kvs` longtext COMMENT '标签拥有的值',
   `update_time` datetime DEFAULT NULL COMMENT '标签更新时间',
+  `create_time` datetime DEFAULT NULL COMMENT '标签创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='标签表';

@@ -71,8 +71,8 @@
             "contentType": "application/json",
             "success": callback,
             "complete": function (event, request, settings) {
-                if (event.responseJSON.data == false && event.responseJSON.resCode == "0001") {
-                    alert(event.responseJSON.statMsg, function () {
+                if (event.responseJSON.data == false && event.responseJSON.code == "302") {
+                    alert(event.responseJSON.msg, function () {
                         window.location.href = 'login.html';
                     });
                 }
@@ -89,8 +89,8 @@
             "data": JSON.stringify(param),
             "success": callback,
             "complete": function (event, request, settings) {
-                if (event.responseJSON.data == false && event.responseJSON.resCode == "0001") {
-                    alert(event.responseJSON.statMsg, function () {
+                if (event.responseJSON.data == false && event.responseJSON.code == "302") {
+                    alert(event.responseJSON.msg, function () {
                         window.location.href = 'login.html';
                     });
                 }

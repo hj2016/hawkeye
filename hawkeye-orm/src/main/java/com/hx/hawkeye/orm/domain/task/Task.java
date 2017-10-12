@@ -30,6 +30,9 @@ public class Task {
     @Column(name = "task_type")
     private String taskType;
 
+    // 任务描述
+    @Column(name = "task_desc")
+    private String taskDesc;
 
     // 任务状态
     @Column(name = "state")
@@ -43,11 +46,9 @@ public class Task {
     @Column(name = "tem_rel_path")
     private String tem_rel_path;
 
-
     // 前置任务id
     @Column(name = "pre_task_id")
     private long preTaskId;
-
 
     // 任务引擎id
     @Column(name = "app_id")
@@ -195,5 +196,13 @@ public class Task {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getTaskDesc() {
+        return taskDesc;
+    }
+
+    public void setTaskDesc(String taskDesc) {
+        this.taskDesc = taskDesc;
     }
 }

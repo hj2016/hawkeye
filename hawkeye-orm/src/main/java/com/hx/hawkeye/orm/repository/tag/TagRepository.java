@@ -18,4 +18,5 @@ public interface TagRepository extends PagingAndSortingRepository<Tag, Long> {
     Tag findByUid(String uid);
 
 
+    Tag findById(String tagId);
 }

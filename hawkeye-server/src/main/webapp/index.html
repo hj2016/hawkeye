@@ -25,6 +25,20 @@
 	</style>
 	<script src="scripts/common/menu.config.js"></script>
 	<script src="scripts/libs/requirejs/require.min.js" data-main="scripts/common/require.config.js"></script>
+
+	<script type="application/javascript" >
+        // 自定义弹出框
+        window.alert = function (msg,callback) {
+            var flag = false;
+            $("#alert-msg").html(msg);
+            $("#alert-div").modal('show');
+            $("#btn-ensure").off("click");
+            if(typeof(callback) != "undefined"){
+                $("#btn-ensure").on("click",callback);
+            }
+        }
+	</script>
+
 <body class="fixed-sidebar full-height-layout gray-bg skin-3" style="overflow:hidden">
 	<div class="pace  pace-inactive">
 		<div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">

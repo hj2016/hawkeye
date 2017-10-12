@@ -151,7 +151,7 @@ public class UserServiceImpl{
     public BaseMessage findUserBySession(HttpServletRequest request) {
         User user = (User)request.getSession().getAttribute(ConstantUtil.SESSION_USER);
         if (user == null ){
-            return new BaseMessage(MessageCode.SUCCESSED, false);
+            return new BaseMessage(MessageCode.USER_NOT_LOGIN, false);
         }
         Set<UserRole> userRoles = user.getUserRoles();
         StringBuffer roles = new StringBuffer();
