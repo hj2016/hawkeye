@@ -1,4 +1,5 @@
 define(function (require, exports, module) {
+    var $= require("util").selected;
     var fun = {};
 
     var util = require("util");
@@ -10,6 +11,79 @@ define(function (require, exports, module) {
 
     var removeCondition = function (e) {
         $(this).parent().parent().remove();
+    }
+
+    var selectControl = function (eo,tags) {
+        if (tags.choiceType == 1) {
+            // 多选控件
+            var checkBoxhtml = "<div class='col-sm-6' >" +
+                "<div class='checkbox checkbox-info  checkbox-common'>" +
+                "<input type='checkbox' id='checkbox{id}' value='{kv}' name='{tagId}'>" +
+                "<label for='checkbox{id}'>{text}</label>" +
+                "</div>" +
+                "</div>";
+            var html = util.reloadHtml("/page/taskManager/taskCheckBox.html")
+            eo.html(html);
+            var valKvs = tags.valKvs.split(",")
+            for (var i = 0; i < valKvs.length; i++) {
+                var text = valKvs[i].split(":")[1];
+                var rehtml = checkBoxhtml.replace(/{id}/g, i).replace(/{kv}/g, valKvs[i]).replace(/{text}/g, text).replace(/{tagId}/g, tags.tagId)
+                eo.find("#dateWidget").append(rehtml);
+            }
+
+        }
+        if (tags.choiceType == 2) {
+            // 输入控件
+            var html = util.reloadHtml("/page/taskManager/taskInput.html");
+            eo.html(html);
+        }
+        if (tags.choiceType == 3) {
+            // 时间控件
+            var html = util.reloadHtml("/page/taskManager/taskDate.html");
+            eo.html(html);
+            // 时间控件
+            jeDate = require("jedate");
+            eo.find("#beginTime").on("click", function () {
+                var maxdate = jeDate.now(0)
+                if ($("#endTime").val() != "") {
+                    maxdate = eo.find("#endTime").val();
+                }
+                jeDate({
+                    dateCell: eo.find('#beginTime'),
+                    format: "YYYY-MM-DD",
+                    isinitVal: true,
+                    isTime: false,
+                    zIndex: 9999,
+                    maxDate: maxdate
+                });
+            });
+
+            eo.find("#endTime").on("click", function () {
+                var mindate = jeDate.now(0)
+                if (eo.find("#beginTime").val() != "") {
+                    mindate = eo.find("#beginTime").val();
+                }
+                jeDate({
+                    dateCell: eo.find("#endTime"),
+                    format: "YYYY-MM-DD",
+                    isinitVal: true,
+                    isTime: false,
+                    zIndex: 9999,
+                    minDate: mindate,
+                    maxDate: jeDate.now(0)
+                });
+            });
+
+
+        }
+        if (tags.choiceType == 4) {
+            var html = util.reloadHtml("/page/taskManager/taskInputSerch.html");
+            eo.html(html);
+            eo.find("#inputsearch").searchInput({
+                data: tags.valKvs.split(","),
+                separate: " "
+            });
+        }
     }
 
     var addConditionElement = function (preEle, tags, kv, condition) {
@@ -33,8 +107,128 @@ define(function (require, exports, module) {
         preEle.find(".remove-condition").off("click");
         preEle.find(".remove-condition").on("click", removeCondition);
 
+        preEle.find(".edit-condition").off("click");
+        preEle.find(".edit-condition").on("click", editCondition);
     };
 
+    // 条件编辑
+    var editCondition = function () {
+        $("#dimCondition").modal('show');
+        var conditionVal = JSON.parse($(this).parent().prev().prev().find("input").val());
+        var choiceType="";
+        var tags = "";
+        // 加入当前条件div对象
+        var conditionDiv = $(this).parent().parent().parent();
+        // 获取当前修改类别包含或排除
+        var condition = $(this).parent().parent().parent().find(".addCondition").attr("target-data");
+        // 删除对象
+        var removeobj = $(this).parent().parent();
+
+
+        $.postNoAsync("/tagType/findTag?tagId="+conditionVal.tagId,{},function (data) {
+            tags = data.data;
+            choiceType = data.data.choiceType;
+            $("#conditionName").text(data.data.name);
+            var eo = $("#conditionContent");
+            selectControl(eo,data.data);
+
+            var vals = conditionVal.rule.split(",");
+            if(data.data.choiceType==1){
+                var checkboxs = eo.find("input[type=checkbox]");
+                for(var i =0; i<checkboxs.length;i++){
+                    var checkboxVal = checkboxs.eq(i).val().split(":")[0];
+                    for (var j=0;j<vals.length;j++){
+                        if(checkboxVal==vals[j]){
+                            checkboxs.eq(i).attr("checked","checked");
+                            break;
+                        }
+                    }
+                }
+            }
+            if(data.data.choiceType==2){
+                eo.find("input").val(vals.join());
+            }
+            if(data.data.choiceType==3){
+                eo.find("#beginTime").val(vals[0]);
+                eo.find("#endTime").val(vals[1]);
+            }
+            if(data.data.choiceType==4){
+                debugger
+                var arrvalues=new Array();
+                var kvs = data.data.valKvs.split(",");
+                var rule = conditionVal.rule.split(",");
+
+                for(var j=0;j<rule.length;j++){
+                    var r = rule[j];
+                    for(var i=0;i<kvs.length;i++){
+                        var kv = kvs[i].split(":");
+                        var k=kv[0];
+                        if(k==r){
+                            arrvalues.push(kvs[i]);
+                            break;
+                        }
+                    }
+                }
+
+                eo.find("#inputsearch").searchInput({
+                    data: data.data.valKvs.split(","),
+                    separate: " ",
+                    value: arrvalues
+                });
+            }
+
+        });
+
+        // 绑定确认事件
+        $("#editDim").off();
+        $("#editDim").on("click",function () {
+            removeobj.remove();
+            if(choiceType==1){
+                var arr = [];
+                var checkBox = $("#conditionContent").find("input:checked");
+                if (checkBox.length == 0) {
+                    alert("请选择条件！");
+                    return;
+                }
+                checkBox.each(function () {
+                    var value = $(this).val();
+                    arr.push(value);
+                });
+                addConditionElement(conditionDiv, tags, arr, condition);
+            }else if(choiceType==2){
+                var input = $("#conditionContent").find("input");
+                if (input.val() == "") {
+                    alert("请输入模糊匹配条件！");
+                    return;
+                }
+                var arr = input.val().split(",");
+                addConditionElement(conditionDiv, tags, arr, condition);
+            }else if(choiceType==3){
+                var beginTime = $("#conditionContent").find("#beginTime");
+                var endTime = $("#conditionContent").find("#endTime");
+                if (beginTime.val() == "") {
+                    alert("请输入开始时间条件！");
+                    return;
+                }
+
+                if (endTime.val() == "") {
+                    alert("请输入结束时间条件！");
+                    return;
+                }
+                var arr = [beginTime.val(), endTime.val()];
+                addConditionElement(conditionDiv, tags, arr, condition);
+            }else if(choiceType==4){
+                arr =  $("#conditionContent").find("#inputsearch").getSelected();
+                if (arr.length == 0) {
+                    alert("输入模糊选择不能为空！");
+                    return;
+                }
+                addConditionElement(conditionDiv, tags, arr, condition);
+            }
+            $("#conditionContent").html("");
+        });
+
+    }
 
     var addCondition = function (e) {
         var condition = $(this).attr("target-data");
@@ -50,14 +244,6 @@ define(function (require, exports, module) {
         $(".datasource").off("change");
         $(".datasource").on("change",function (e) {
             $(this).parent().parent().parent().find(".condition").parent().remove();
-            var value = $(this).val();
-
-            if(value == "d005"){
-                $$("#crowdType").val("2");
-            }else {
-                $$("#crowdType").val("1");
-            }
-
         });
 
 
@@ -109,13 +295,15 @@ define(function (require, exports, module) {
                 addConditionElement(conditionDiv, tags, arr, condition);
             }
             if (treeSelect[0].tags.choiceType == 4) {
-                arr = $("#inputsearch").getSelected();
+                arr =  $("#event_output").find("#inputsearch").getSelected();
                 if (arr.length == 0) {
                     alert("输入模糊选择不能为空！");
                     return;
                 }
                 addConditionElement(conditionDiv, tags, arr, condition);
             }
+
+            $("#event_output").html("");
         });
 
 
@@ -137,90 +325,7 @@ define(function (require, exports, module) {
             onNodeSelected: function (event, data) {
                 // Your logic goes here
                 var eo = $("#event_output");
-
-                if (data.tags.choiceType == 1) {
-                    // 多选控件
-                    var checkBoxhtml = "<div class='col-sm-6' >" +
-                        "<div class='checkbox checkbox-info  checkbox-common'>" +
-                        "<input type='checkbox' id='checkbox{id}' value='{kv}' name='{tagId}'>" +
-                        "<label for='checkbox{id}'>{text}</label>" +
-                        "</div>" +
-                        "</div>";
-                    var html = util.reloadHtml("/page/taskManager/taskCheckBox.html")
-                    eo.html(html);
-                    var valKvs = data.tags.valKvs.split(",")
-                    for (var i = 0; i < valKvs.length; i++) {
-                        var text = valKvs[i].split(":")[1];
-                        var rehtml = checkBoxhtml.replace(/{id}/g, i).replace(/{kv}/g, valKvs[i]).replace(/{text}/g, text).replace(/{tagId}/g, data.tags.tagId)
-                        eo.find("#dateWidget").append(rehtml);
-                    }
-
-                }
-                if (data.tags.choiceType == 2) {
-                    // 输入控件
-                    var html = util.reloadHtml("/page/taskManager/taskInput.html");
-                    eo.html(html);
-                }
-                if (data.tags.choiceType == 3) {
-                    // 时间控件
-                    var html = util.reloadHtml("/page/taskManager/taskDate.html");
-                    eo.html(html);
-                    // 时间控件
-                    jeDate = require("jedate");
-                    $$("#beginTime").on("click", function () {
-                        var maxdate = jeDate.now(0)
-                        if ($$("#endTime").val() != "") {
-                            maxdate = $$("#endTime").val();
-                        }
-                        jeDate({
-                            dateCell: $$('#beginTime'),
-                            format: "YYYY-MM-DD",
-                            isinitVal: true,
-                            isTime: false,
-                            zIndex: 9999,
-                            maxDate: maxdate
-                        });
-                    });
-
-                    $$("#endTime").on("click", function () {
-                        var mindate = jeDate.now(0)
-                        if ($$("#beginTime").val() != "") {
-                            mindate = $$("#beginTime").val();
-                        }
-                        jeDate({
-                            dateCell: $$("#endTime"),
-                            format: "YYYY-MM-DD",
-                            isinitVal: true,
-                            isTime: false,
-                            zIndex: 9999,
-                            minDate: mindate,
-                            maxDate: jeDate.now(0)
-                        });
-                    });
-
-
-                }
-                if (data.tags.choiceType == 4) {
-                    var html = util.reloadHtml("/page/taskManager/taskInputSerch.html");
-                    eo.html(html);
-                    $("#inputsearch").searchInput({
-                        data: data.tags.valKvs.split(",")
-                    });
-                }
-
-                /*if(data.tags.choiceType == 5) {
-                    var html = util.reloadHtml("/page/taskManager/taskRangeSlider.html");
-                    eo.html(html);
-                    debugger
-
-                    $("#range").ionRangeSlider({
-                        type: "single",
-                        min: 0,
-                        max: 20,
-                        from: 1,
-                        step: 1
-                    });
-                }*/
+                selectControl(eo,data.tags);
             }
         });
     };
@@ -239,7 +344,7 @@ define(function (require, exports, module) {
 
     var submitTask = function (e) {
 
-        var taskInfoForm = $$("#taskInfoForm").serializeObject();
+        var taskInfoForm = $("#taskInfoForm").serializeObject();
 
         // 输入参数检测
 
@@ -249,10 +354,6 @@ define(function (require, exports, module) {
             return;
         }
 
-        if (taskInfoForm.taskMotif == "") {
-            alert("请选择任务主题！");
-            return;
-        }
         var conditions = [];
 
         var vaildate = true;
@@ -287,40 +388,7 @@ define(function (require, exports, module) {
                 return;
             }
 
-            // 门店 会员等级必选
-            if(dataSource == "d002" && taskInfoForm.crowdType==0 ){
-                var op = rule.find("select>option[value='"+dataSource+"']").text();
-                var hydj = rule.find(".has-success").parent().find(".condition .text-success:contains('会员等级')");
-                if(hydj.length == 0){
-                    alert(op+":请选择会员等级！");
-                    vaildate = false;
-                    return;
-                }
-            }
 
-            // 日期选择必选检测
-            if(dataSource != "d001" && dataSource != "" && taskInfoForm.crowdType==0){
-                var op = rule.find("select>option[value='"+dataSource+"']").text();
-                var xsrq = rule.find(".has-success").parent().find(".condition .text-success:contains('销售日期')");
-
-                if(xsrq.length==0){
-                    alert(op+":请选择销售日期！");
-                    vaildate = false;
-                    return;
-                }
-                // 判断日期范围
-                debugger
-                var _button = xsrq.parent().find("button");
-                var start = _button.eq(0).text();
-                var end = _button.eq(1).text();
-                var year = ( new Date(end +" 00:00:00")-new Date(start +" 00:00:00") )/1000/60/60/24/365;
-
-                if( year>1 ){
-                    alert(op+":销售日期选择区间不能大于一年！");
-                    vaildate = false;
-                    return;
-                }
-            }
             condition.includes = includes;
             condition.excludes = excludes;
             condition.dataSource = dataSource;
@@ -332,22 +400,17 @@ define(function (require, exports, module) {
             return;
         }
 
-        /*if(!vaildate){
-            alert("验证失败");
-            return;
-        }
-        alert("验证成功");*/
 
         taskInfoForm.conditions = conditions;
 
         console.log(JSON.stringify(taskInfoForm));
 
-        taskInfoForm.monthlyLimit = $$("#range").val();
 
         $.postAsync("/task/addTask", taskInfoForm, function(data) {
             //console.log(JSON.stringify(data));
             alert("保存成功!",function () {
-                $("a[mode='taskList']").click();
+                $(document).find("a[mode='taskManager']").click();
+                $(document).find("a[mode='taskList']").click();
             });
 
         });
@@ -356,19 +419,17 @@ define(function (require, exports, module) {
     };
 
     var mobileModle = function(){
-        $$("select[name='datasource'] option[value='d005']").remove();
+        $("select[name='datasource'] option[value='d005']").remove();
     }
 
     var appModle = function(){
-        $$("select[name='datasource'] option[value='d001']").remove();
-        $$("select[name='datasource'] option[value='d002']").remove();
-        $$("select[name='datasource'] option[value='d003']").remove();
-        $$("select[name='datasource'] option[value='d004']").remove();
+        $("select[name='datasource'] option[value='d001']").remove();
+        $("select[name='datasource'] option[value='d002']").remove();
+        $("select[name='datasource'] option[value='d003']").remove();
+        $("select[name='datasource'] option[value='d004']").remove();
     }
 
     fun.init = function () {
-
-
 
         // datasource
         $(".datasource").off("change");
@@ -376,9 +437,9 @@ define(function (require, exports, module) {
             $(this).parent().parent().parent().find(".condition").parent().remove();
             var value = $(this).val();
             /*if(value == "d005"){
-                $$("#crowdType").val("2");
+                $("#crowdType").val("2");
             }else {
-                $$("#crowdType").val("1");
+                $("#crowdType").val("1");
             }*/
         });
 
@@ -421,7 +482,7 @@ define(function (require, exports, module) {
                 $(".addCondition").on("click", addCondition);
 
                 //移除已选中的选项
-                $(".datasource").off("mousedown");
+                /*$(".datasource").off("mousedown");
                 $(".datasource").on("mousedown",function (e) {
                     var v = $(this).val();
                     var obj = $(this);
@@ -432,15 +493,9 @@ define(function (require, exports, module) {
                             obj.find("option[value='"+other+"']").hide();
                         }
                     })
-                });
+                });*/
             }
 
-            var crowdType = $$("#crowdType").val();
-            if(crowdType==0){
-                mobileModle();
-            }else if(crowdType==1){
-                appModle();
-            }
         });
 
 

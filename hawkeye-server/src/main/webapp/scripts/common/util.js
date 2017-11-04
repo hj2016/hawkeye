@@ -1,6 +1,30 @@
 define(function (require, exports, module) {
     var fun = {};
 
+    fun.numToMoneyValue = function (num) {
+        var num = num + "";
+        len = num.length;
+        str = "";
+        if (len == 0) {
+            return;
+        }
+        var n= len % 3 ==0 ? parseInt(len / 3)-1:parseInt(len / 3)
+
+        for (var i = 0; i <= n; i++) {
+            var start = len-(3*(i+1));
+            if(start<0){
+                start = 0;
+            }
+            var end =len-(3*i);
+            if(i==0){
+                str = num.substring(start,end);
+            }else{
+                str = num.substring(start,end) +"," + str;
+            }
+
+        }
+        return str;
+    }
 
     // json 对象判断
     fun.isJson = function (str) {
@@ -30,7 +54,7 @@ define(function (require, exports, module) {
     // 整数
 
     fun.isInt = function (str) {
-        var g=/^-?\d+$/;
+        var g = /^-?\d+$/;
         return g.test(str);
     }
 
@@ -124,10 +148,16 @@ define(function (require, exports, module) {
         return htmldata;
     }
 
-    $$ = function (selected) {
-        var dataId = $("a[class='J_menuTab active']").attr("data-id")
-        return $("div[data-id='" + dataId + "']").find(selected)
+    fun.selected = function (selected) {
+        if (typeof (selected) == "object") {
+            return $(selected);
+        }
+        var dataId = $("a[class='J_menuTab active']").attr("data-id");
+        var jquery = $("div[data-id='" + dataId + "']").find(selected);
+        $.extend(fun.selected, $);
+        return jquery;
     }
+
 
     //全局返回方法
     returnPage = function (e) {

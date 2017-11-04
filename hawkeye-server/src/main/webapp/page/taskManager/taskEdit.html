@@ -3,74 +3,65 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5 id="taskTitle" >新建营销任务
-                       <!-- <small>输入任务相关属性</small>-->
+                    <h5>编辑任务信息
                     </h5>
+                    <div class="ibox-tools">
+                        <button class="btn-sm btn-white btn-block" data-url="page/taskManager/taskList.html"
+                                data-mode="taskList" data-value="" onclick="returnPage(event)" style="cursor:pointer;">
+                            返回
+                        </button>
+                    </div>
+
                 </div>
                 <div class="ibox-content">
                     <div class="form-horizontal">
                         <h5>一般任务属性</h5>
                         <div class="hr-line-dashed"></div>
                         <form id="taskInfoForm">
-                            <input type="hidden" value="J0001" name="taskType" />
+                            <input type="hidden" value="J0001" name="taskType">
+                            <!-- 1:手机号维度  2:设备号维度-->
+                            <input type="hidden" value="1" name="crowdType" id="crowdType">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">任务名称</label>
                                 <div class="col-sm-10">
-                                    <input type="text" placeholder="" class="form-control" required=""
+                                    <input type="text" placeholder="例如：xx店新店开业app消息推送" class="form-control" required=""
                                            aria-required="true" name="taskName">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">任务说明</label>
                                 <div class="col-sm-10">
-                                    <textarea id="comment" name="taskDesc" class="form-control"></textarea>
+                                    <textarea id="ccomment" name="taskDes" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">任务主题</label>
+                                <div class="col-sm-6">
+                                    <select name="taskMotif" placeholder="任务主题" class="form-control">
+                                        <option value="">--任务主题--</option>
+                                        <option value="1">新店开业</option>
+                                        <option value="2">闭店</option>
+                                        <option value="3">区域促销活动</option>
+                                        <option value="4">区域主题活动</option>
+                                        <option value="5">外卖促销活动</option>
+                                    </select>
                                 </div>
                             </div>
                         </form>
-                        <div class="hr-line-solid"></div>
-                        <h5>选择条件</h5>
-                        <div class="hr-line-dashed"></div>
-                        <div id="rulediv">
-                            <div class="rule">
-                                <div class="form-group has-warning">
-                                    <label class="col-sm-2 control-label">圈人规则</label>
-                                    <div class="col-sm-10">
-                                        <button class="btn-sm btn-danger pull-right delRule"><i class="fa fa-times"></i>删除规则</button>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">选择数据源</label>
-                                    <div class="col-sm-2 m-b-xs">
-                                        <select name="datasource" placeholder="数据源" class="form-control datasource">
-                                            <option value="">--数据源--</option>
-                                            <option value="d001">股票</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-group has-success">
-                                        <label class="col-sm-2 control-label">包含</label>
-                                        <div class="col-sm-10">
-                                            <button class="btn btn-white addCondition" target-data="include" type="button">
-                                                <i class="fa fa-plus"></i> 添加
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-group has-error">
-                                        <label class="col-sm-2 control-label">排除</label>
-                                        <div class="col-sm-10">
-                                            <button class="btn btn-white addCondition" target-data="exclude" type="button">
-                                                <i class="fa fa-plus"></i> 添加
-                                            </button>
-                                        </div>
-                                    </div>
 
-                                </div>
-                            </div>
+
+                        <div class="form-group col-sm-12">
+                            <h5>选择条件</h5>
+                            <div class="hr-line-dashed"></div>
                         </div>
+
+
+                        <form id="taskDetailForm">
+                        </form>
+
+
                         <div class="hr-line-dashed"></div>
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label">添加规则</label>
                             <div class="col-sm-2">
@@ -79,26 +70,32 @@
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
-                        <!--<div class="form-group">
+
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">当月发送累计次数</label>
                             <div class="col-sm-8">
                                 <input id="range" type="text"  placeholder="请拖动按钮选择" class="form-control">
                             </div>
-                        </div>-->
+                        </div>
+
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <button class="btn btn-primary submit" type="button" id="submitTask" >
+                                <button class="btn btn-primary submit" type="button" id="submitTask">
                                     保存任务
                                 </button>
                             </div>
                         </div>
+
                     </div>
+
+
                 </div>
+
+
             </div>
         </div>
     </div>
 </div>
-
 <!--筛选条件的弹窗-->
 <div class="modal fade" id="dimRule" tabindex="-1" role="dialog"   data-backdrop="static" aria-hidden="true" aria-labelledby="#addDim">
     <div class="modal-dialog modal-lg" role="document">
@@ -132,7 +129,7 @@
     </div>
 </div>
 
-
+<!--编辑条件的弹窗-->
 <div class="modal fade" id="dimCondition" tabindex="-1" role="dialog"   data-backdrop="static" aria-hidden="true" aria-labelledby="#editDim">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">

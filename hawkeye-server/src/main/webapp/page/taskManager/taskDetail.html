@@ -50,6 +50,8 @@
                                         <option value="9">发送成功</option>
                                         <option value="10">测试中</option>
                                         <option value="11">已测试</option>
+                                        <option value="12">发送失败</option>
+                                        <option value="13">市场部审核</option>
                                     </select>
                                 </div>
                             </div>
@@ -150,8 +152,8 @@
                                     <label class="col-sm-2 control-label">短信内容:</label>
                                     <div class="col-sm-10">
                                             <textarea id="smsMsgContent" name="msgContent" maxlength="500"
-                                                      class="form-control msgContent"
-                                                      placeholder="请输入短信内容,注意加入TD退订" disabled="disabled"></textarea>
+                                                      class="form-control msgContent" disabled="disabled"></textarea>
+                                            <span id="codesize" class="help-block pull-right codesize"></span>
                                     </div>
                                 </div>
 
@@ -159,7 +161,7 @@
                                     <label class="col-sm-2 control-label">发送时间:</label>
                                     <div class="col-sm-5">
                                         <input type="text" class="input form-control datePeriod" id="smsDatePeriod"
-                                               name="datePeriod" value="" placeholder="发送时间精确到分钟" disabled="disabled">
+                                               name="datePeriod" value=""  disabled="disabled">
                                     </div>
                                 </div>
 
@@ -167,7 +169,7 @@
                                     <label class="col-sm-2 control-label">发送数量:</label>
                                     <div class="col-sm-5">
                                         <input type="text" class="input form-control" id="smsSendAmount"
-                                               name="sendAmount" value="" placeholder="发送短信数量" disabled="disabled">
+                                               name="sendAmount" value=""  disabled="disabled">
                                     </div>
                                 </div>
                             </form>
@@ -180,7 +182,7 @@
                                     <label class="col-sm-2 control-label">信息标题:</label>
                                     <div class="col-sm-7">
                                         <input type="text" class="input form-control msgTitle" name="title" value=""
-                                               placeholder="请输入发送信息标题" disabled="disabled">
+                                                disabled="disabled">
                                     </div>
                                 </div>
 
@@ -188,7 +190,7 @@
                                     <label class="col-sm-2 control-label">信息内容:</label>
                                     <div class="col-sm-10">
                                         <textarea name="body" maxlength="500" class="form-control msgContent"
-                                                  placeholder="请输入信息内容,注意加入TD退订" disabled="disabled"></textarea>
+                                                   disabled="disabled"></textarea>
                                     </div>
                                 </div>
 
@@ -196,7 +198,7 @@
                                     <label class="col-sm-2 control-label">跳转链接:</label>
                                     <div class="col-sm-7">
                                         <input type="text" class="input form-control jumpLink" name="url" value=""
-                                               placeholder="请输入跳转链接" disabled="disabled">
+                                                disabled="disabled">
                                     </div>
                                 </div>
 
@@ -204,7 +206,7 @@
                                     <label class="col-sm-2 control-label">有效存在时长:</label>
                                     <div class="col-sm-5">
                                         <input type="text" class="input form-control time" name="time" value=""
-                                               placeholder="请输入有效存在时长(小时)" disabled="disabled">
+                                                disabled="disabled">
                                     </div>
                                 </div>
 
@@ -212,7 +214,7 @@
                                     <label class="col-sm-2 control-label">发送时间:</label>
                                     <div class="col-sm-5">
                                         <input type="text" class="input form-control datePeriod" id="smsDatePeriod"
-                                               name="datePeriod" value="" placeholder="发送时间精确到分钟" disabled="disabled">
+                                               name="datePeriod" value=""  disabled="disabled">
                                     </div>
                                 </div>
 

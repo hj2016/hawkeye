@@ -37,10 +37,6 @@ public class Tag {
     @Column(name = "choice_type")
     private String choiceType;
 
-    // uid
-    @Column(name = "uid")
-    private String uid;
-
     // 标签名
     @Column(name = "name")
     private String name;
@@ -66,14 +62,6 @@ public class Tag {
     // 更新时间
     @Column(name = "update_time")
     private Date updateTime;
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
 
     public String getName() {
         return name;

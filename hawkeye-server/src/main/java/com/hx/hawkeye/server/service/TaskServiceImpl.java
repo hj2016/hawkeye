@@ -52,21 +52,13 @@ public class TaskServiceImpl {
         String AND = "AND";
         List<Condition> conditionsList = taskConditionDto.getConditions();
         //拼接sq
-        StringBuffer pzbpartne3Pq = new StringBuffer();
-        StringBuffer zpwsd008 = new StringBuffer();
-        StringBuffer zpwsd006 = new StringBuffer();
-        StringBuffer pzshopnew = new StringBuffer();
-        StringBuffer tofOrdrTranx = new StringBuffer();
-        StringBuffer smsTags = new StringBuffer();
-        StringBuffer appTags = new StringBuffer();
+        StringBuffer stockTag = new StringBuffer();
 
         Task task = new Task();
         List<Object> TagRuleDtos = new ArrayList<Object>();
         List<Object> excludess = new ArrayList<Object>();
 
         StringBuffer sqlContent = new StringBuffer();
-
-        String crowdType = "";
 
 
         // 有数据
@@ -85,11 +77,11 @@ public class TaskServiceImpl {
 
                                 String tagId = list.get(k).getTagId();
                                 String content = list.get(k).getRule();
-                                Tag tag = tagDao.findById(tagId);
+                                Tag tag = tagDao.findByTagId(tagId);
                                 String tableName = tag.getTableName();
 
                                 if (tableName.equalsIgnoreCase("stock_tag")) {
-                                    pzbpartne3Pq.append(TagSql.inBuildSql(AND, tag.getColumnName(), tag.getChoiceType(), content, true));
+                                    stockTag.append(TagSql.inBuildSql(AND, tag.getColumnName(), tag.getChoiceType(), content, true));
                                 }
                             }
                         }
@@ -118,7 +110,7 @@ public class TaskServiceImpl {
 
                                     if (tableName.equalsIgnoreCase("stock_tag")) {
 
-                                        pzbpartne3Pq.append(TagSql.exBuildSql(AND, tag.getColumnName(), tag.getChoiceType(), content, true));
+                                        stockTag.append(TagSql.exBuildSql(AND, tag.getColumnName(), tag.getChoiceType(), content, true));
                                     }
                                 }
                             }
@@ -128,7 +120,7 @@ public class TaskServiceImpl {
                 String dataSource = conditionsList.get(i).getDataSource();
 
                 if (dataSource.equalsIgnoreCase("d001")) {
-                    sql.append("select * from stock_tag where 1=1 " + pzbpartne3Pq.toString());
+                    sql.append("select * from stock_tag where 1=1 " + stockTag.toString());
                 }
 
                 sqlContent.append(sql + ";");
@@ -150,22 +142,7 @@ public class TaskServiceImpl {
         } else {
             count = excludess.size();
         }
-        /*for (int j = 0; j < count; j++) {
-			TagRule tagRule = new TagRule();
 
-			try {
-				if (excludess.size() > j && excludess.get(j) != null) {
-					tagRule.setExclude(JSON.json(excludess.get(j)));
-				}
-				if (TagRuleDtos.size() > j && TagRuleDtos.get(j) != null) {
-					tagRule.setInclude(JSON.json(TagRuleDtos.get(j)));
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			tagRule.setTaskId(task.getId());
-			tagRuleMapper.insertSelective(tagRule);
-		}*/
 
         for (int j = 0; j < conditionsList.size(); j++) {
             TagRule tagRule = new TagRule();

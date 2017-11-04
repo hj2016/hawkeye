@@ -19,11 +19,29 @@
         return arr;
     }
 
+
+
     $.fn.searchInput = function (config) {
         //config.data 数据源
         var selected = [];
+        var _separate = ",";
+        if(typeof (config.separate) != "undefined"){
+            _separate = config.separate;
+        }
         // 初始化
-        
+
+        if(typeof (config.value) != "undefined"){
+            for(var i=0;i<config.value.length;i++){
+                var _divspan = divspan.replace(/{value}/g, config.value[i]);
+                var insertSpan = $(this).find(".tag.label:last");
+                if(insertSpan.length == 0){
+                    $(this).prepend(_divspan);
+                }else{
+                    $(this).find(".tag.label:last").after(_divspan);
+                }
+                selected.push(config.value[i]);
+            }
+        }
 
         $(this).off("keydown");
         $(this).on("keydown", function (e) {
@@ -101,13 +119,50 @@
                 }
                 case 13: {
                     // 回车键
-                    var _divspan = divspan.replace(/{value}/g, activediv.text());
-                    $(this).find(".tag.label:last").after(_divspan);
-                    selected.push($(this).text());
-                    activediv.remove();
+                    var val = $(this).find("input[name='search-input']").val();
+                    if( activediv.length==0 && val.indexOf(_separate)!=-1 ){
+                        var selectTable= $(this).find(".tt-selectable");
+                        for(var k=0 ; k<selectTable.length; k++ ){
+                            var text= selectTable.eq(k).text();
+                            var _divspan = divspan.replace(/{value}/g, text);
+                            var insertSpan = $(this).find(".tag.label:last");
+                            if(insertSpan.length == 0){
+                                $(this).prepend(_divspan);
+                            }else{
+                                $(this).find(".tag.label:last").after(_divspan);
+                            }
+                            selected.push(text);
+                            activediv.remove();
+                        }
+                        alert("选中："+val+"等 "+selectTable.length+"条记录！");
+
+                    }else{
+                        var _divspan = divspan.replace(/{value}/g, activediv.text());
+                        var insertSpan = $(this).find(".tag.label:last");
+                        if(insertSpan.length == 0){
+                            $(this).prepend(_divspan);
+                        }else{
+                            $(this).find(".tag.label:last").after(_divspan);
+                        }
+
+
+                        selected.push(activediv.text());
+                        activediv.remove();
+                    }
+                    // remove 按钮加入事件
+                    inputsearch.find("span[data-role='remove']").off("click");
+                    inputsearch.find("span[data-role='remove']").on("click", function () {
+                        var removeDiv = $(this).parent();
+                        selected.pop(removeDiv.text());
+                        removeDiv.remove();
+                    });
+
+                    // 清空操作
                     $(this).find("input[name='search-input']").val("");
                     inputsearch.find(".tt-dataset.tt-dataset-states").empty();
                     inputsearch.find(".tt-menu").hide();
+
+
                     break;
                 }
                 default: {
@@ -115,25 +170,34 @@
                     var val = $(this).find("input[name='search-input']").val();
                     var segdiv = $(this).find(".tt-dataset.tt-dataset-states");
                     segdiv.empty();
-                    for (var i = 0; i < config.data.length; i++) {
-                        var tagkv = config.data[i];
-                        var flag = true;
-                        if (tagkv.indexOf(val) != -1) {
-                            // 过滤已经选中的
-                            for (var j = 0; j < selected.length; j++) {
-                                if (selected[j] == tagkv) {
-                                    flag = false;
-                                    break;
+
+                    var vals = val.split(_separate);
+                    for(var n=0;n<vals.length;n++){
+
+                        var _value =vals[n];
+                        for (var i = 0; i < config.data.length; i++) {
+                            var tagkv = config.data[i];
+                            var flag = true;
+                            if (tagkv.indexOf(_value) != -1) {
+                                // 过滤已经选中的
+                                for (var j = 0; j < selected.length; j++) {
+                                    if (selected[j] == tagkv) {
+                                        flag = false;
+                                        break;
+                                    }
                                 }
-                            }
 
-                            if (flag) {
-                                var _segHtml = segHtml.replace(/{text}/g, tagkv).replace(/{id}/g, i);
-                                segdiv.append(_segHtml);
-                            }
+                                if (flag) {
+                                    var _segHtml = segHtml.replace(/{text}/g, tagkv).replace(/{id}/g, i);
+                                    segdiv.append(_segHtml);
+                                }
 
+                            }
                         }
+
                     }
+
+
                     // 加入鼠标进入事件
                     $(this).find(".tt-suggestion.tt-selectable").on("mouseenter", function (e) {
                         segdiv.find(".tt-suggestion.tt-selectable").removeClass("active");
