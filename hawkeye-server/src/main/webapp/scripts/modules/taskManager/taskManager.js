@@ -418,16 +418,6 @@ define(function (require, exports, module) {
 
     };
 
-    var mobileModle = function(){
-        $("select[name='datasource'] option[value='d005']").remove();
-    }
-
-    var appModle = function(){
-        $("select[name='datasource'] option[value='d001']").remove();
-        $("select[name='datasource'] option[value='d002']").remove();
-        $("select[name='datasource'] option[value='d003']").remove();
-        $("select[name='datasource'] option[value='d004']").remove();
-    }
 
     fun.init = function () {
 

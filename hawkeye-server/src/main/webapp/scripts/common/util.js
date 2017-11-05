@@ -187,6 +187,16 @@ define(function (require, exports, module) {
         return fmt;
     }
 
+    // 根据值移出元素
+    Array.prototype.remove = function(val) {
+        for(var i=0; i<this.length; i++) {
+            if(this[i] == val) {
+                this.splice(i, 1);
+                break;
+            }
+        }
+    }
+
     return fun;
 
 })

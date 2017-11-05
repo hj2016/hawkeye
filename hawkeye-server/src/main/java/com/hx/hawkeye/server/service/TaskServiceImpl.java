@@ -10,10 +10,7 @@ import com.hx.hawkeye.orm.domain.task.Task;
 import com.hx.hawkeye.orm.repository.tag.TagRepository;
 import com.hx.hawkeye.orm.repository.tag.TagRuleRepository;
 import com.hx.hawkeye.orm.repository.task.TaskRepository;
-import com.hx.hawkeye.server.dto.Condition;
-import com.hx.hawkeye.server.dto.TagRuleDto;
-import com.hx.hawkeye.server.dto.TagSql;
-import com.hx.hawkeye.server.dto.TaskConditionForm;
+import com.hx.hawkeye.server.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -161,4 +158,7 @@ public class TaskServiceImpl {
 
     }
 
+    public List<Task> taskSearchList(TaskSearchForm taskSearchForm) {
+        List<Task> tasks=taskDao.taskSearchList(taskSearchForm.getTaskName());
+    }
 }

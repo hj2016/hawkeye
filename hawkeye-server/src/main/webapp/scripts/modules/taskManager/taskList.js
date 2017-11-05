@@ -49,7 +49,7 @@ define(function (require, exports, module) {
                 }
             });
 
-            // 编辑查询条件
+            /*// 编辑查询条件
             $(".taskEdit").off("click");
             $(".taskEdit").on("click", function () {
                 util = require("util");
@@ -57,7 +57,7 @@ define(function (require, exports, module) {
                 var taskEdit = require("taskEdit");
                 var id = $(this).parent().parent().attr("data-uniqueid");
                 taskEdit.init(id);
-            });
+            });*/
         }
 
         // 开始结束时间控件

@@ -41,6 +41,13 @@
                 }
                 selected.push(config.value[i]);
             }
+            $(this).find("span[data-role='remove']").off("click");
+            $(this).find("span[data-role='remove']").on("click", function () {
+                debugger
+                var removeDiv = $(this).parent();
+                selected.remove(removeDiv.text());
+                removeDiv.remove();
+            });
         }
 
         $(this).off("keydown");
@@ -51,7 +58,7 @@
                     var val = $(this).find("input[name='search-input']").val();
                     if (val == "") {
                         $(this).find(".tag.label:last").remove();
-                        selected.pop($(this).find(".tag.label:last").text());
+                        selected.remove($(this).find(".tag.label:last").text());
                         console.log(selected.toString())
                     }
                     break;
@@ -153,7 +160,7 @@
                     inputsearch.find("span[data-role='remove']").off("click");
                     inputsearch.find("span[data-role='remove']").on("click", function () {
                         var removeDiv = $(this).parent();
-                        selected.pop(removeDiv.text());
+                        selected.remove(removeDiv.text());
                         removeDiv.remove();
                     });
 
@@ -221,7 +228,7 @@
                         inputsearch.find("span[data-role='remove']").off("click");
                         inputsearch.find("span[data-role='remove']").on("click", function () {
                             var removeDiv = $(this).parent();
-                            selected.pop(removeDiv.text());
+                            selected.remove(removeDiv.text());
                             removeDiv.remove();
                         });
 
