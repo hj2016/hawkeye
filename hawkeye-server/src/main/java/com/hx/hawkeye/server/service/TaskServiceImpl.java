@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -158,7 +159,16 @@ public class TaskServiceImpl {
 
     }
 
-    public List<Task> taskSearchList(TaskSearchForm taskSearchForm) {
-        List<Task> tasks=taskDao.taskSearchList(taskSearchForm.getTaskName());
+    public List<Object> taskSearchList(TaskSearchForm taskSearchForm) {
+        List<Object> list =new ArrayList<Object>();
+        long totol = taskDao.taskSearchListCount(taskSearchForm.getTaskName(),taskSearchForm.getTaskState(),taskSearchForm.getStartTime(),taskSearchForm.getEndTime(),taskSearchForm.getOffset(),taskSearchForm.getLimit()).longValue();
+
+        List<Task> tasks= new ArrayList<Task>();
+        if(totol!=0){
+            tasks = taskDao.taskSearchList(taskSearchForm.getTaskName(),taskSearchForm.getTaskState(),taskSearchForm.getStartTime(),taskSearchForm.getEndTime(),taskSearchForm.getOffset(),taskSearchForm.getLimit());
+        }
+        list.add(totol);
+        list.add(tasks);
+        return list;
     }
 }

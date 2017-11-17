@@ -4,7 +4,9 @@ package com.hx.hawkeye.orm.repository.task;
 import com.hx.hawkeye.orm.domain.task.Task;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -72,4 +74,12 @@ public interface TaskRepository extends PagingAndSortingRepository<Task, Long> {
     Task findByAccountAndId(String account, long id);*/
 
     Task findById(Long id);
+
+    @Query(value = "select * from task where task_name like %?1% and  state like %?2% and DATE_FORMAT(create_time,'%Y-%m-%d') like %?3% and DATE_FORMAT(update_time,'%Y-%m-%d') like %?4% limit ?5,?6", nativeQuery = true)
+    @Transactional
+    List<Task> taskSearchList(String taskName, String taskState, String startTime, String endTime,Long Offset,Long limit);
+
+    @Query(value = "select count(*) from task where task_name like %?1% and  state like %?2% and DATE_FORMAT(create_time,'%Y-%m-%d') like %?3% and DATE_FORMAT(update_time,'%Y-%m-%d') like %?4% limit ?5,?6", nativeQuery = true)
+    @Transactional
+    BigInteger taskSearchListCount(String taskName, String taskState, String startTime, String endTime, Long offset, Long limit);
 }

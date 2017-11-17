@@ -103,7 +103,7 @@ define(function (require, exports, module) {
             queryParams: function (params) {
                 params.taskName = $("input[name='taskName']").val();
                 params.startTime = $("input[name='startTime']").val();
-                params.endTime = $("select[name='endTime']").val();
+                params.endTime = $("input[name='endTime']").val();
                 params.taskState = $("select[name='taskState']").val();
                 return params;
             },

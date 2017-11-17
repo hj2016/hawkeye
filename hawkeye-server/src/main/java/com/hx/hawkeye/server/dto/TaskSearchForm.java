@@ -9,6 +9,11 @@ public class TaskSearchForm {
     public String endTime;
     public String taskState;
 
+    private Long limit = 10L;
+    private Long offset = 0L;
+
+    private String order;
+
     public String getTaskName() {
         return taskName;
     }
@@ -39,5 +44,29 @@ public class TaskSearchForm {
 
     public void setTaskState(String taskState) {
         this.taskState = taskState;
+    }
+
+    public Long getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Long limit) {
+        this.limit = limit;
+    }
+
+    public Long getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Long offset) {
+        this.offset = offset;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
     }
 }

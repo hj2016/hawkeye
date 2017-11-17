@@ -79,8 +79,8 @@ public class TaskController {
     @ResponseBody
     public BaseMessage viewList(@RequestBody TaskSearchForm taskSearchForm){
         try{
-            List<Task> tasks= taskService.taskSearchList(taskSearchForm);
-            return new BaseMessage(MessageCode.SUCCESSED, tasks);
+            List<Object> taskpages= taskService.taskSearchList(taskSearchForm);
+            return new BaseMessage(MessageCode.SUCCESSED, taskpages);
         }catch (Exception e){
             logger.error("viewList 异常：",e);
             return new BaseMessage (MessageCode.FAILED, MessageCode.SYSTEM_ERROR);
