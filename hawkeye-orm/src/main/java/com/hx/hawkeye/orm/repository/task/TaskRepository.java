@@ -75,11 +75,11 @@ public interface TaskRepository extends PagingAndSortingRepository<Task, Long> {
 
     Task findById(Long id);
 
-    @Query(value = "select * from task where task_name like %?1% and  state like %?2% and DATE_FORMAT(create_time,'%Y-%m-%d') like %?3% and DATE_FORMAT(update_time,'%Y-%m-%d') like %?4% limit ?5,?6", nativeQuery = true)
+    @Query(value = "select t.id,a.account_name as account,t.task_name,t.task_type,t.task_desc,t.state,t.content,t.tem_rel_path,t.pre_task_id,t.app_id,t.date_period,t.start_time,t.end_time,t.dimension,t.create_time,t.update_time from task t left outer join account a on (a.account=t.account) where t.task_name like %?1% and  t.state like %?2% and DATE_FORMAT(t.create_time,'%Y-%m-%d') like %?3% and DATE_FORMAT(t.update_time,'%Y-%m-%d') like %?4% limit ?5,?6", nativeQuery = true)
     @Transactional
     List<Task> taskSearchList(String taskName, String taskState, String startTime, String endTime,Long Offset,Long limit);
 
-    @Query(value = "select count(*) from task where task_name like %?1% and  state like %?2% and DATE_FORMAT(create_time,'%Y-%m-%d') like %?3% and DATE_FORMAT(update_time,'%Y-%m-%d') like %?4% limit ?5,?6", nativeQuery = true)
+    @Query(value = "select count(*) from task where task_name like %?1% and  state like %?2% and DATE_FORMAT(create_time,'%Y-%m-%d') like %?3% and DATE_FORMAT(update_time,'%Y-%m-%d') like %?4% ", nativeQuery = true)
     @Transactional
-    BigInteger taskSearchListCount(String taskName, String taskState, String startTime, String endTime, Long offset, Long limit);
+    BigInteger taskSearchListCount(String taskName, String taskState, String startTime, String endTime);
 }

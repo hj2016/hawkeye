@@ -120,7 +120,7 @@ define(function (require, exports, module) {
                     field: 'id',
                     visible: false
                 }, {
-                    field: 'taskState',
+                    field: 'state',
                     title: '任务状态',
                     formatter: function (e) {
                         if (e == 0) {
@@ -176,57 +176,14 @@ define(function (require, exports, module) {
                 }, {
                     field: 'endTime',
                     title: '结束时间'
-                }, {
-                    field: 'taskMotif',
-                    title: '任务主题',
-                    formatter: function (e) {
-                        if (e == 1) {
-                            return "开业";
-                        }
-                        if (e == 2) {
-                            return "闭店";
-                        }
-                        if (e == 3) {
-                            return "店庆";
-                        }
-                        if (e == 4) {
-                            return "其他";
-                        }
-
-                    }
-                }, {
-                    field: 'crowdType',
-                    title: '营销方式',
-                    formatter: function (e) {
-                        if (e == 0) {
-                            return "短信发送";
-                        } else if (e == 1) {
-                            return "app消息推送";
-                        }
-                    }
-                }, {
-                    field: 'name',
+                },{
+                    field: 'account',
                     title: '操作者'
                 }, {
                     field: 'taskState',
                     title: '操作',
                     formatter: function (e) {
-
-
-                        if (e == 4) {
-                            return "<button class='btn btn-white btn-sm see'><i class='fa fa-eye'></i>查看</button>&nbsp;&nbsp;<button class='btn btn-success btn-sm sendMsg'><i class='fa fa-paper-plane-o'></i>发送消息</button>";
-                        } else if (e == 6) {
-                            return "<button class='btn btn-white btn-sm see'><i class='fa fa-eye'></i>查看</button>&nbsp;&nbsp;<button class='btn btn-white btn-sm taskEdit'><i class='fa fa-edit'></i>编辑</button>";
-                        } else if (e == 7) {
-                            return "<button class='btn btn-white btn-sm see'><i class='fa fa-eye'></i>查看</button>&nbsp;&nbsp;<button class='btn btn-danger btn-sm stopTask'><i class='fa fa-pause'></i>停止发送</button>";
-                        } else if (e == 10) {
-                            return "<button class='btn btn-white btn-sm see'><i class='fa fa-eye'></i>查看</button>&nbsp;&nbsp;<button class='btn badge-primary btn-sm sendMsgTest'><i class='fa fa-flask'></i>测试发送</button>";
-                        } else if (e == 11) {
-                            return "<button class='btn btn-white btn-sm see'><i class='fa fa-eye'></i>查看</button>&nbsp;&nbsp;<button class='btn badge-primary btn-sm sendMsgTest'><i class='fa fa-flask'></i>测试发送</button>&nbsp;&nbsp;<button class='btn btn-info btn-sm submitExamine'><i class='fa fa-external-link'></i>提交审核</button>";
-                        } else {
-                            return "<button class='btn btn-white btn-sm see'><i class='fa fa-eye'></i>查看</button>";
-                        }
-
+                        return "<button class='btn btn-white btn-sm see'><i class='fa fa-eye'></i>查看</button>";
                     }
                 }]
         });

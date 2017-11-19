@@ -11,37 +11,14 @@ define(function(require, exports, module) {
 
 
         $.postAsync("/task/selectTask?id="+id,{}, function(data) {
-            var monthlyLimit = data.data.monthlyLimit.split(";");
-            data.data.monthlyLimit=monthlyLimit[0]+"到"+monthlyLimit[1];
 
-            var tagData = "";
-            $.postNoAsync("/tagType/getTagDiction",{},function (data) {
-                tagData = data.data;
-
-            });
 
             var conditionHtml = util.reloadHtml("/page/taskManager/taskCondition.html");
             var taskRuleHtml = util.reloadHtml("/page/taskManager/taskRule.html");
 
             var taskDetailForm = $$("#taskDetailForm");
             $.setFields($$("form")[0], data.data);
-
-            // 发送内容回显
-            if(data.data.crowdType == 0){
-
-                $$("#sendMobile").show();
-                $$("#sendApp").hide();
-                $.setFields($$("#sendMobileForm")[0], data.data);
-
-            }else if(data.data.crowdType == 1){
-
-                $$("#sendMobile").hide();
-                $$("#sendApp").show();
-                $.setFields($$("#sendAppForm")[0], data.data);
-                $.setFields($$("#sendAppForm")[0], JSON.parse(data.data.sms));
-
-            }
-
+            
 
             for(var i=0 ; i<data.data.tagRules.length;i++){
                 var tagRule = data.data.tagRules[i];

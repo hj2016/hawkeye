@@ -87,4 +87,23 @@ public class TaskController {
         }
 
     }
+
+    /**
+     * 添加
+     *
+     * @param taskSearchForm
+     * @return
+     */
+    @RequestMapping(value = "selectTask", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseMessage selectTask(@RequestBody Long id){
+        try{
+            TaskConditionForm form = taskService.findDetailById(id);
+            return new BaseMessage(MessageCode.SUCCESSED, form);
+        }catch (Exception e){
+            logger.error("viewList 异常：",e);
+            return new BaseMessage (MessageCode.FAILED, MessageCode.SYSTEM_ERROR);
+        }
+
+    }
 }
