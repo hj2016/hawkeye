@@ -3,6 +3,7 @@
  */
 define(function(require, exports, module) {
     var fun = {};
+    var $= require("util").selected;
     fun.init = function (id) {
 
         var conditionButton = "<button class='btn btn-default' style='margin-left: 5px;margin-right: 5px;margin-bottom: 5px' type='button'>{conditionName}</button>";
@@ -12,13 +13,18 @@ define(function(require, exports, module) {
 
         $.postAsync("/task/selectTask?id="+id,{}, function(data) {
 
+            var tagData = "";
+            $.postNoAsync("/tagType/getTagDiction",{},function (data) {
+                tagData = data.data;
+
+            });
 
             var conditionHtml = util.reloadHtml("/page/taskManager/taskCondition.html");
             var taskRuleHtml = util.reloadHtml("/page/taskManager/taskRule.html");
 
-            var taskDetailForm = $$("#taskDetailForm");
-            $.setFields($$("form")[0], data.data);
-            
+            var taskDetailForm = $("#taskDetailForm");
+            $.setFields($("form")[0], data.data);
+
 
             for(var i=0 ; i<data.data.tagRules.length;i++){
                 var tagRule = data.data.tagRules[i];

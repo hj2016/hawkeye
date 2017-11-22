@@ -19,6 +19,8 @@ import java.util.Map;
 @Service
 public class TagTypeServiceImpl {
 
+    public static Map<String, Map> tag = null;
+
     @Resource
     private TagRepository tagDao;
 
@@ -58,5 +60,29 @@ public class TagTypeServiceImpl {
 
     public Tag findTagById(String tagId) {
         return tagDao.findByTagId(tagId);
+    }
+
+    public void initTagData() {
+        Map<String, Map> tagMap = new HashMap<String, Map>();
+        List<Tag> tags = this.tagDao.findAll();
+        for (Tag tag : tags) {
+            if (tag.getValKvs() == null) {
+                tagMap.put(tag.getTagId(), new HashMap());
+            } else {
+                String[] tagstrs = tag.getValKvs().split(",");
+                Map<String, String> kvs = new HashMap<String, String>();
+                for (String tagstr : tagstrs) {
+                    String[] kv = tagstr.split(":");
+                    if (kv.length == 2) {
+                        kvs.put(kv[0], kv[1]);
+                    }
+                }
+
+                tagMap.put(tag.getTagId(), kvs);
+            }
+
+        }
+        TagTypeServiceImpl.tag = tagMap;
+
     }
 }

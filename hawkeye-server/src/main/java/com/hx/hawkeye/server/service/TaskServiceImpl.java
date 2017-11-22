@@ -13,6 +13,7 @@ import com.hx.hawkeye.orm.repository.task.TaskRepository;
 import com.hx.hawkeye.server.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -160,13 +161,13 @@ public class TaskServiceImpl {
     }
 
     public List<Object> taskSearchList(TaskSearchForm taskSearchForm) {
-        List<Object> list =new ArrayList<Object>();
-        long totol = taskDao.taskSearchListCount(taskSearchForm.getTaskName(),taskSearchForm.getTaskState(),taskSearchForm.getStartTime(),taskSearchForm.getEndTime()).longValue();
+        List<Object> list = new ArrayList<Object>();
+        long totol = taskDao.taskSearchListCount(taskSearchForm.getTaskName(), taskSearchForm.getTaskState(), taskSearchForm.getStartTime(), taskSearchForm.getEndTime()).longValue();
 
-        List<Task> tasks= new ArrayList<Task>();
+        List<Task> tasks = new ArrayList<Task>();
 
-        if(totol!=0){
-            tasks = taskDao.taskSearchList(taskSearchForm.getTaskName(),taskSearchForm.getTaskState(),taskSearchForm.getStartTime(),taskSearchForm.getEndTime(),taskSearchForm.getOffset(),taskSearchForm.getLimit());
+        if (totol != 0) {
+            tasks = taskDao.taskSearchList(taskSearchForm.getTaskName(), taskSearchForm.getTaskState(), taskSearchForm.getStartTime(), taskSearchForm.getEndTime(), taskSearchForm.getOffset(), taskSearchForm.getLimit());
 
         }
 
@@ -176,8 +177,12 @@ public class TaskServiceImpl {
 
     }
 
-    public TaskConditionForm findDetailById(Long id) {
+    public TaskForm findDetailById(Long id) {
+        TaskForm form = new TaskForm();
         Task task = taskDao.findById(id);
-
+        BeanUtils.copyProperties(task, form);
+        List<TagRule> list = this.tagRuleDao.findByTaskId(id);
+        form.setTagRules(list);
+        return form;
     }
 }

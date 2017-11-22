@@ -47,4 +47,10 @@ public class TagTypeController {
         Tag tag = tagTypeService.findTagById(tagId);
         return new BaseMessage(MessageCode.SUCCESSED, tag);
     }
+
+    @RequestMapping(value = "getTagDiction", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseMessage getTagDiction(){
+        return new BaseMessage(MessageCode.SUCCESSED, TagTypeServiceImpl.tag);
+    }
 }

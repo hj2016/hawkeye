@@ -32,4 +32,7 @@ public interface TagRepository extends PagingAndSortingRepository<Tag, Long> {
      * @return
      */
     Tag findByTagId(String tagId);
+
+
+    List<Tag> findAll();
 }

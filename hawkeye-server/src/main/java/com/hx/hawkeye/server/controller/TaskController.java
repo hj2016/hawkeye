@@ -3,6 +3,7 @@ package com.hx.hawkeye.server.controller;
 import com.hx.hawkeye.orm.domain.authority.User;
 import com.hx.hawkeye.orm.domain.task.Task;
 import com.hx.hawkeye.server.dto.TaskConditionForm;
+import com.hx.hawkeye.server.dto.TaskForm;
 import com.hx.hawkeye.server.dto.TaskSearchForm;
 import com.hx.hawkeye.server.message.BaseMessage;
 import com.hx.hawkeye.server.message.MessageCode;
@@ -96,9 +97,9 @@ public class TaskController {
      */
     @RequestMapping(value = "selectTask", method = RequestMethod.POST)
     @ResponseBody
-    public BaseMessage selectTask(@RequestBody Long id){
+    public BaseMessage selectTask(Long id){
         try{
-            TaskConditionForm form = taskService.findDetailById(id);
+            TaskForm form = taskService.findDetailById(id);
             return new BaseMessage(MessageCode.SUCCESSED, form);
         }catch (Exception e){
             logger.error("viewList 异常：",e);
